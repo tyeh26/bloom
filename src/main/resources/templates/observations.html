@@ -8,7 +8,10 @@
     </div>
 </div>
 <div class="container">
-    World
+    <p>Date</p>
+    <ul>
+        <li th:each="observation : ${observations}" th:text="${observation}"></li>
+    </ul>
 </div>
 
 </body>
