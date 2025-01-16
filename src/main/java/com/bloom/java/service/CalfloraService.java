@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class CalfloraService {
@@ -51,6 +51,64 @@ public class CalfloraService {
 
         return observations;
     }
+
+    public static List<Integer> getBlooms(String crn) {
+        List<Integer> months = new ArrayList<Integer>();
+        try {
+            String targetUrl = "https://www.calflora.org/app/taxon?crn=" + crn;
+            URL url = new URL(targetUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            
+            Document doc = Jsoup.parse(response.toString());
+        
+            // Select the div with id="c-bloom"
+            Element bloomDiv = doc.select("div#c-bloom").first();
+            
+            if (bloomDiv == null) {
+                return months;  // Return an empty array if #c-bloom is not found
+            }
+
+            // Select all path elements inside the bloom div
+            Elements paths = bloomDiv.select("path");
+
+            // Define the mapping of colors to values
+            Map<String, Integer> colorMap = new HashMap<>();
+            colorMap.put("#ffffff", 0);  // white
+            colorMap.put("#95f5ff", 1);  // light blue
+
+            // Iterate through the paths and map the color to the corresponding month
+            int monthIndex = 0;
+            for (Element path : paths) {
+                String style = path.attr("style");
+                String fillColor = style.replaceAll(".*fill:([^;]+).*", "$1").toLowerCase();  // Extract the fill color
+                
+                months.add(colorMap.getOrDefault(fillColor, 0));  // Default to 0 if color is unrecognized
+                monthIndex++;
+
+                if (monthIndex >= 12) {
+                    break;  // Stop after processing 12 months
+                }
+            }
+
+
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return months;
+    }
+
 
     public static List<Map<String, String>> search(String query) {
         List<Map<String, String>> speciesList = new ArrayList<>();
@@ -107,7 +165,7 @@ public class CalfloraService {
                     // Create a map for each species and ID pair
                     Map<String, String> speciesMap = new HashMap<>();
                     speciesMap.put("species", matcher.group(1));  // Species name
-                    speciesMap.put("id", matcher.group(2));  // ID number
+                    speciesMap.put("crn", matcher.group(2));  // ID number
 
                     // Add the map to the list
                     speciesList.add(speciesMap);

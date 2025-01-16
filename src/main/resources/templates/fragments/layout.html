@@ -1,66 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="layout (template, menu)" lang="en">
 <head>
-    <title>Java Getting Started on Heroku</title>
+    <title>Observations & Bloom Periods</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
 <nav class="navbar navbar-default navbar-static-top navbar-inverse">
-    <div class="container">
-        <ul class="nav navbar-nav">
-            <li class="active">
-                <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
-            </li>
-            <li>
-                <a href="https://devcenter.heroku.com/articles/how-heroku-works"><span class="glyphicon glyphicon-user"></span> How Heroku Works</a>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-info-sign"></span> Getting Started Guides (Cedar) <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-ruby">Getting Started on Heroku with Ruby</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started on Heroku with Node.js</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-php">Getting Started on Heroku with PHP</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started on Heroku with Python</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-java">Getting Started on Heroku with Java</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-clojure">Getting Started on Heroku with Clojure</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-scala">Getting Started on Heroku with Scala</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-go">Getting Started on Heroku with Go</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-dotnet">Getting Started on Heroku with .NET</a></li>
-                    <li class="divider"></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-heroku-and-connect-without-local-dev">Getting Started on Heroku with Heroku Connect</a></li>
-                </ul>
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-info-sign"></span> Getting Started Guides (Fir) <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-ruby-fir">Getting Started on Heroku Fir with Ruby</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs-fir">Getting Started on Heroku Fir with Node.js</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-php-fir">Getting Started on Heroku Fir with PHP</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python-fir">Getting Started on Heroku Fir with Python</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-java-maven-fir">Getting Started on Heroku Fir with Java (Maven)</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-java-gradle-fir">Getting Started on Heroku Fir with Java (Gradle)</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-clojure-fir">Getting Started on Heroku Fir with Clojure</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-scala-fir">Getting Started on Heroku Fir with Scala</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-go-fir">Getting Started on Heroku Fir with Go</a></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-dotnet-fir">Getting Started on Heroku Fir with .NET</a></li>
-                    <li class="divider"></li>
-                    <li><a href="https://devcenter.heroku.com/articles/getting-started-with-heroku-and-connect-without-local-dev">Getting Started on Heroku with Heroku Connect</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-right">
-                <a href="https://devcenter.heroku.com"><span class="glyphicon glyphicon-book"></span> Heroku Dev Center</a>
-            </li>
-        </ul>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-2" style="color: #FEFAE0">
+                Plant name or taxon:
+            </div>
+            <div class="col-md-6">
+                <form id="searchForm" action="" method="GET">
+                    <div class="input-group">
+                        <input type="text" id="searchBox" name="q" class="form-control" placeholder="Lupinus albifrons">
+                    </div>
+                    <div class="dropdown">
+                        <ul id="autocompleteList" class="dropdown-menu w-100 mt-1" style="position: absolute; z-index: 1000;"></ul>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </nav>
 
 <div th:replace="${template}"></div>
+
+<div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <span id="citation" class="text-muted"></span>
+    </footer>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -69,4 +53,64 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+        const date = new Date();
+        const formattedDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+        $("#citation").text(`Calflora: Information on California plants for education, research and conservation, with data contributed by public and private institutions and individuals. [web application]. Berkeley, California: The Calflora Database [a non-profit organization]. Available: https://www.calflora.org/   (Accessed: ${formattedDate}).`);
+
+        const $searchBox = $('#searchBox');
+        const $autocompleteList = $('#autocompleteList');
+
+        $searchBox.on('input', function() {
+            const query = $(this).val();
+
+            if (query.length > 1) {
+                $.ajax({
+                    url: '/api/search',
+                    method: 'GET',
+                    data: { q: query },
+                    success: function(data) {
+                        $autocompleteList.empty();
+                        let result = JSON.parse(data).result
+
+                        if (Array.isArray(result) && result.length > 0) {
+                            result.forEach(item => {
+                                $autocompleteList.append(`<li class="dropdown-item" data-crn="${item.crn}">${item.species}</li>`);
+                            });
+                            $autocompleteList.show();
+                        } else {
+                            $autocompleteList.hide();
+                        }
+                    },
+                    error: function() {
+                        $autocompleteList.hide();
+                    }
+                });
+            } else {
+                $autocompleteList.empty().hide();
+            }
+        });
+
+        $autocompleteList.on('click', 'li', function() {
+            const selectedValue = $(this).text();
+            selectedCRN = $(this).data('crn');
+            $searchBox.val(selectedValue);
+            $autocompleteList.empty().hide();
+            // Redirect immediately upon selecting an item
+            window.location.href = `?taxon=${encodeURIComponent(selectedValue)}&crn=${encodeURIComponent(selectedCRN)}`;
+        });
+
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('#autocompleteList, #searchBox').length) {
+                $autocompleteList.hide();
+            }
+        });
+
+        $('#searchForm').on('submit', function(e) {
+            e.preventDefault();
+        });
+    });
+</script>
 </body>

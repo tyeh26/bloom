@@ -3,37 +3,46 @@
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<div class="jumbotron text-center">
+<div>
     <div class="container">
-        Hello
+        Visualize the correlation of bloom time and observations using Calflora's database. Search above to view another plant.
     </div>
 </div>
 
-<div class="chart-container" style="position: relative; height:50vh; width:80vw">
-    <canvas id="radialHistogram" width="400" height="400"></canvas>
+<div class="container" style="width:100%">
+    <div class="chart-container" style="position: relative; height:50vh; max-width:fit-content; margin:0 auto">
+        <canvas id="radialHistogram" width="400" height="400"></canvas>
+    </div>
 </div>
 
 <script th:inline="javascript">
     var ctx = document.getElementById('radialHistogram').getContext('2d');
     
-    var postData = [[${post1950Counts}]];
-    var preData = [[${pre1950Counts}]];
+    var observations = [[${observations}]];
+    var blooms = [[${blooms}]];
+    var taxon = [[${taxon}]];
+    var crn = [[${crn}]];
+    var title = taxon + " (crn: " + crn + ")";
+
+    if (taxon) {
+        $('#searchBox').attr('placeholder', taxon);
+    }
 
     var myChart = new Chart(ctx, {
-        type: 'radar',
+        type: 'bar',
         data: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], // Example labels, adjust as needed
             datasets: [{
-                label: "post 1950 (n=[[${post1950Total}]])",
-                data: postData,
-                backgroundColor: ['#FF6384'], // Example colors
-                hoverBackgroundColor: ['#FF6384']
+                label: "Observations (n=[[${observationsTotal}]])",
+                data: observations,
+                backgroundColor: ['#606c38'], // Example colors
+                hoverBackgroundColor: ['#bc6c25']
             },
             {
-                label: "pre 1950 (n=[[${pre1950Total}]])",
-                data: preData,
-                backgroundColor: ['#FF9F40'], // Example colors
-                hoverBackgroundColor: ['#FF9F40']
+                label: "Bloom Period",
+                data: blooms,
+                backgroundColor: ['#dda15e'],
+                hoverBackgroundColor: ['#bc6c25']
             }
         
         ]
@@ -41,6 +50,10 @@
         options: {
             responsive: true,
             plugins: {
+                title: {
+                    display: true,
+                    text: title,
+                },
                 legend: {
                     position: 'top',
                 },
