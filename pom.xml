@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>java-getting-started</name>
+    <name>bloom</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -12,8 +12,8 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.heroku</groupId>
-    <artifactId>java-getting-started</artifactId>
+    <groupId>com.bloom</groupId>
+    <artifactId>bloom</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
@@ -29,18 +29,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-        <!-- <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency> -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.3</version> <!-- Use the latest version available -->
+        </dependency>
     </dependencies>
 
     <build>

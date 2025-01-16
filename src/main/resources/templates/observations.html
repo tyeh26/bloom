@@ -1,18 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
-<body>
 
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="jumbotron text-center">
     <div class="container">
         Hello
     </div>
 </div>
-<div class="container">
-    <p>Date</p>
-    <ul>
-        <li th:each="observation : ${observations}" th:text="${observation}"></li>
-    </ul>
+
+<div class="chart-container" style="position: relative; height:50vh; width:80vw">
+    <canvas id="radialHistogram" width="400" height="400"></canvas>
 </div>
+
+<script th:inline="javascript">
+    var ctx = document.getElementById('radialHistogram').getContext('2d');
+    
+    var postData = [[${post1950Counts}]];
+    var preData = [[${pre1950Counts}]];
+
+    var myChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], // Example labels, adjust as needed
+            datasets: [{
+                label: "post 1950 (n=[[${post1950Total}]])",
+                data: postData,
+                backgroundColor: ['#FF6384'], // Example colors
+                hoverBackgroundColor: ['#FF6384']
+            },
+            {
+                label: "pre 1950 (n=[[${pre1950Total}]])",
+                data: preData,
+                backgroundColor: ['#FF9F40'], // Example colors
+                hoverBackgroundColor: ['#FF9F40']
+            }
+        
+        ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    enabled: true,
+                }
+            }
+        }
+    });
+</script>
+
 
 </body>
 </html>
