@@ -34,7 +34,7 @@ public class CalfloraService {
             e.printStackTrace();
         }
 
-        String fileUrl = "https://www.calflora.org/app/download?xun=136445&format=CSV&cols=ID,Date&cell=t&georef=a&georeferenced=t&ostatus=a&pcount=1&doc_type=rs&natural_status=w&taxon=" + encodedBinomial + "&addnloc=t&cch=t&cnabh=t&wint=r";
+        String fileUrl = "https://www.calflora.org/app/download?xun=136445&format=CSV&cols=ID,Date&cell=t&georef=a&georeferenced=t&ostatus=a&pcount=1&doc_type=rs&natural_status=any&taxon=" + encodedBinomial + "&addnloc=t&cch=t&cnabh=t&wint=r";
         
         try {
             String localFilePath = "output.csv";
