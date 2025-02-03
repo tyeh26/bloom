@@ -2,11 +2,14 @@ package com.bloom.java.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bloom.java.service.CalfloraService;
+import com.bloom.java.service.TaxaLoader;
 
 @Controller
 public class MainController {
@@ -64,6 +68,36 @@ public class MainController {
 
         return "observations";
     }
+
+    @GetMapping("/fuzzy")
+    public String fuzzy(
+            @RequestParam(value = "q", required = false, defaultValue = "") String query, Model model) {
+                List<Map<String, Object>> taxa;
+
+                if (query.contains(" ")) {
+
+                    // DRY this
+                    taxa = TaxaLoader.getInstance().getData().stream()
+                    .map(item -> new AbstractMap.SimpleEntry<>(item, item.distance(query))) // Map to (string, distance)
+                    .sorted(Comparator.comparingInt(Map.Entry::getValue)) // Sort by distance
+                    .limit(100) // Take the top `limit` items
+                    .map(entry -> Map.of("taxa", entry.getKey(), "distance", entry.getValue())) // Convert to JSON-like map
+                    .toList(); // Collect as List
+                } else {
+                    taxa = TaxaLoader.getInstance().getData().stream()
+                    .map(item -> new AbstractMap.SimpleEntry<>(item, item.minDistanceAnyRank(query))) // Map to (string, distance)
+                    .sorted(Comparator.comparingInt(Map.Entry::getValue)) // Sort by distance
+                    .limit(100) // Take the top `limit` items
+                    .map(entry -> Map.of("taxa", entry.getKey(), "distance", entry.getValue())) // Convert to JSON-like map
+                    .toList(); // Collect as List
+                }
+                
+                model.addAttribute("taxa", taxa);
+                model.addAttribute("query", query);
+
+                return "fuzzy";
+            }
+
 
     // Count the dates by month, where 0 = January, 11 = December
     private static List<Integer> countDatesByMonth(List<Date> dates) {

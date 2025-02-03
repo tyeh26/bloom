@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div>
+    <div class="container">
+        <p>
+            Searching species similar to <b><span th:text="${query}"></span></b>.
+        </p>
+        <p>
+            List of taxons closest to query using Levenshtein Distance metric.  Lower is closer
+        </p>
+        <ol>
+            <li th:each="item : ${taxa}">
+                <span th:text="${item.taxa} + ' (' + ${item.distance} + ')'"></span>
+            </li>
+        </ol>
+    </div>
+</div>
+
+</body>
+</html> 

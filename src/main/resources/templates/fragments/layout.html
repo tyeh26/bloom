@@ -27,10 +27,12 @@
                 <form id="searchForm" action="" method="GET">
                     <div class="input-group">
                         <input type="text" id="searchBox" name="q" class="form-control" placeholder="Lupinus albifrons">
+                        <button id="fuzzySearchButton" type="submit" disabled>‽</button>>
                     </div>
                     <div class="dropdown">
                         <ul id="autocompleteList" class="dropdown-menu w-100 mt-1" style="position: absolute; z-index: 1000;"></ul>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -62,9 +64,11 @@
 
         const $searchBox = $('#searchBox');
         const $autocompleteList = $('#autocompleteList');
+        const $fuzzySearchButton = $('#fuzzySearchButton');
 
         $searchBox.on('input', function() {
             const query = $(this).val();
+            $fuzzySearchButton.prop('disabled', false);
 
             if (query.length > 1) {
                 $.ajax({
@@ -80,6 +84,7 @@
                                 $autocompleteList.append(`<li class="dropdown-item" data-crn="${item.crn}">${item.species}</li>`);
                             });
                             $autocompleteList.show();
+
                         } else {
                             $autocompleteList.hide();
                         }
@@ -106,10 +111,7 @@
             if (!$(e.target).closest('#autocompleteList, #searchBox').length) {
                 $autocompleteList.hide();
             }
-        });
 
-        $('#searchForm').on('submit', function(e) {
-            e.preventDefault();
         });
     });
 </script>
