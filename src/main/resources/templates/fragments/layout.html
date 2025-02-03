@@ -19,22 +19,25 @@
 <body>
 <nav class="navbar navbar-default navbar-static-top navbar-inverse">
     <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-2" style="color: #FEFAE0">
-                Type plant name or taxon:
-            </div>
-            <div class="col-md-6">
-                <form id="searchForm" action="fuzzy" method="GET">
-                    <div class="input-group">
-                        <input type="text" id="searchBox" name="q" class="form-control" placeholder="Lupinus albifrons">
-                        <button id="fuzzySearchButton" type="submit" disabled>‽</button>>
+            <form id="searchForm" action="fuzzy" method="GET">
+                <div class="input-group">
+                    <div class="row g-1 align-items-center h-100">
+                        <div class="col-md-5 d-flex" style="color: #FEFAE0">
+                            Type plant name or taxon:
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <input type="text" id="searchBox" name="q" class="form-control" placeholder="Lupinus albifrons">
+                        </div>
+                        <div class="col-md-1 d-flex">
+                            <button id="fuzzySearchButton" type="submit" disabled>‽</button>>
+                        </div>
                     </div>
-                    <div class="dropdown">
-                        <ul id="autocompleteList" class="dropdown-menu w-100 mt-1" style="position: absolute; z-index: 1000;"></ul>
-                    </div>
+                </div>
+                <div class="dropdown">
+                    <ul id="autocompleteList" class="dropdown-menu w-100 mt-1" style="position: absolute; z-index: 1000;"></ul>
+                </div>
+            </form>
 
-                </form>
-            </div>
         </div>
     </div>
 </nav>
