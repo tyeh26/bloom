@@ -9,13 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 import com.bloom.models.Taxon;
 
+
+// Read and load taxa data into memory as a List of Taxon objects.
+// Uses the Singleton pattern
 public class TaxaLoader {
     private static TaxaLoader instance;
     private List<Taxon> taxa = new ArrayList<Taxon>();
+
+    // Path to file with format, with a header row
+    // genus,species,subspecies,variety,cultivar
+
+    // All entries are unique
+    // only genus is required
+    // See models/Taxon.java for more
+
+    // Exclude hybrids
+
+    // Format is derived to process Calscape data, not necessarily to
+    // reflect scientific accuracy.
     private static String filePath = "taxa.csv";
 
     private TaxaLoader() {
-        // Private constructor to prevent instantiation
         this.taxa = loadData();
     }
 

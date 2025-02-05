@@ -6,11 +6,15 @@ import java.util.List;
 
 import com.bloom.java.service.StringMetrics;
 
+
+// TODO refactor as a proper tree data structure?
 public class Taxon {
-    public String genus;
+    public String genus; // required
+
+    // Requires on of the following
     public String species;
-    public String subspecies;
-    public String variety;
+    public String subspecies; // if provided, requires species
+    public String variety; // if provided, requires species
     public String cultivar;
 
     private Taxon(Builder builder) {
@@ -25,6 +29,8 @@ public class Taxon {
         return StringMetrics.levenshteinDistance(this.toString(), query);
     }
 
+    // Given a single word, presumed to be a rank or cultivar,
+    // return the minimum distance to any single part of the taxon
     public int minDistanceAnyRank(String query) {
         List<Integer> distances = new ArrayList<Integer>();
         distances.add(StringMetrics.levenshteinDistance(this.genus, query));
@@ -78,6 +84,7 @@ public class Taxon {
         public String variety = null;
         public String cultivar = null;
         
+        // TODO: Make genus a required field.
         public Builder setGenus(String genus) {
             this.genus = genus;
             return this;

@@ -1,5 +1,8 @@
 package com.bloom.java.service;
 
+
+// Really just a string comparison class
+// TODO: Measure quality of response and explore phonetic comparators
 public class StringMetrics {
     
     public static int levenshteinDistance(String s, String t) {

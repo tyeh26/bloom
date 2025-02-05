@@ -23,6 +23,9 @@ import com.bloom.java.service.TaxaLoader;
 @Controller
 public class MainController {
     
+    // Homepage
+    // given a Calflora CRN, retrieve that plants observations and bloom period
+    // then plot a histogram of observations and bloom period
     @GetMapping("/")
     public String index(
             @RequestParam(value = "taxon", required = false, defaultValue = "Lupinus albifrons") String taxon,
@@ -34,7 +37,7 @@ public class MainController {
 
         for (int i = 1; i < observations.size(); i++) {
             String[] columns = observations.get(i).split(",");
-            String dateString = columns[1].replace("\"", "").trim(); // Remove quotes
+            String dateString = columns[1].replace("\"", "").trim();
 
             // Parse the date string
             try {
@@ -69,14 +72,22 @@ public class MainController {
         return "observations";
     }
 
+    // Given a string query
+    // Return the 100 closest species
+
+    // Query is differentiated as string (a word within the scientific name)
+    // or the whole scientific name depending on the presence of a space
+
+    // TODO: Measure quality of response
     @GetMapping("/fuzzy")
     public String fuzzy(
             @RequestParam(value = "q", required = false, defaultValue = "") String query, Model model) {
                 List<Map<String, Object>> taxa;
 
+                // minor optimization that solves for when the search term is
+                // a single unspecified rank that's spelled correctly.
                 if (query.contains(" ")) {
-
-                    // DRY this
+                    // DRY this, only the distance method is different
                     taxa = TaxaLoader.getInstance().getData().stream()
                     .map(item -> new AbstractMap.SimpleEntry<>(item, item.distance(query))) // Map to (string, distance)
                     .sorted(Comparator.comparingInt(Map.Entry::getValue)) // Sort by distance
@@ -84,6 +95,7 @@ public class MainController {
                     .map(entry -> Map.of("taxa", entry.getKey(), "distance", entry.getValue())) // Convert to JSON-like map
                     .toList(); // Collect as List
                 } else {
+                    // DRY this, only the distance method is different
                     taxa = TaxaLoader.getInstance().getData().stream()
                     .map(item -> new AbstractMap.SimpleEntry<>(item, item.minDistanceAnyRank(query))) // Map to (string, distance)
                     .sorted(Comparator.comparingInt(Map.Entry::getValue)) // Sort by distance
@@ -100,6 +112,7 @@ public class MainController {
 
 
     // Count the dates by month, where 0 = January, 11 = December
+    // TODO: Refactor this into some data processing utility
     private static List<Integer> countDatesByMonth(List<Date> dates) {
         List<Integer> monthCount = new ArrayList<>(Collections.nCopies(12, 0)); // 12 months, initialize to 0
 

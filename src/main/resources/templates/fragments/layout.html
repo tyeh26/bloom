@@ -29,7 +29,7 @@
                             <input type="text" id="searchBox" name="q" class="form-control" placeholder="Lupinus albifrons">
                         </div>
                         <div class="col-md-1 d-flex">
-                            <button id="fuzzySearchButton" type="submit" disabled>‽</button>>
+                            <button id="fuzzySearchButton" type="submit" disabled>Search</button>>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
             $searchBox.val(selectedValue);
             $autocompleteList.empty().hide();
             // Redirect immediately upon selecting an item
-            window.location.href = `?taxon=${encodeURIComponent(selectedValue)}&crn=${encodeURIComponent(selectedCRN)}`;
+            window.location.href = `/?taxon=${encodeURIComponent(selectedValue)}&crn=${encodeURIComponent(selectedCRN)}`;
         });
 
         $(document).on('click', function(e) {
